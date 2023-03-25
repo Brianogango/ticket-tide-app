@@ -10,8 +10,8 @@ class PaymentsController < ApplicationController
     @payment.save
 
     # send SMS message with OTP to user's phone number
-    account_sid = ENV['AC515bfd95bf56ca19e302dee232948f7f']
-    auth_token = ENV['4bf2a18030721bc378f5b76abca6c58b']
+    account_sid = ENV['TWILIO_ACCOUNT_SID']
+    auth_token = ENV['TWILIO_AUTH_TOKEN']
     client = Twilio::REST::Client.new(account_sid, auth_token)
     message = client.messages.create(
       body: "Your OTP is #{@payment.reference_number}",
@@ -52,4 +52,8 @@ class PaymentsController < ApplicationController
      def ticket_params
       params.permit(:booking_date, :ticket_type)
     end
+
+    TWILIO_ACCOUNT_SID: YOUR_ACCOUNT_SID
+    TWILIO_AUTH_TOKEN: YOUR_AUTH_TOKEN
+    TWILIO_PHONE_NUMBER: YOUR_PHONE_NUMBER
 end
